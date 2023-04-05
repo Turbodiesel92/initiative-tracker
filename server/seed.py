@@ -50,10 +50,7 @@ if __name__ == '__main__':
 
         print("Seeding users")
         users = [
-            User(username='Matthew'),
-            User(password='1234abcd'),
-            User(campaign_id='Wanders Palace'),
-
+            User(username='Matthew', campaign_id='3'),
         ]
 
         db.session.add_all(users)
@@ -64,8 +61,15 @@ if __name__ == '__main__':
         for playercharacter in player_characters:
             nonplayercharacter = rc(non_player_characters)
             campaigns.append(
-                Campaign(player_character=playercharacter, non_player_character=nonplayercharacter)
+                Campaign(player_character=playercharacter, non_player_character=nonplayercharacter, campaign_name='Wanders Palace')
             )
+
+        for playercharacter in player_characters:
+            nonplayercharacter = rc(non_player_characters)
+            campaigns.append(
+                Campaign(player_character=playercharacter, non_player_character=nonplayercharacter, campaign_name='Ice Bound Lair')
+            )
+
         db.session.add_all(campaigns)
         db.session.commit()
 

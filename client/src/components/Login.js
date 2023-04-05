@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styled from "styled-components";
+// import styled from "styled-components";
 import LoginForm from "../components/LoginForm";
 import SignUpForm from "../components/SignUpForm";
 import { Button } from "../styles";
@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
   return (
     <Wrapper>
-      <Logo>Reciplease</Logo>
+      <Logo>Turn Tracker</Logo>
       {showLogin ? (
         <>
           <LoginForm onLogin={onLogin} />
