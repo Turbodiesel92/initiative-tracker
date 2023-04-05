@@ -14,9 +14,8 @@ function NavBar({ user, setUser }) {
 
   return (
     <Wrapper>
-      <Logo>
+
         <h1>Turn Tracker</h1>
-      </Logo>
       <Nav>
         {/* <Button as={Link} to="/new"> */}
           {/* New Recipe */}
