@@ -23,7 +23,7 @@ class PlayerCharacter(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     pc_name = db.Column(db.String)
-    initiative = db.Column(db.Integer)
+    # initiative = db.Column(db.Integer)
 
     campaigns = db.relationship('Campaign', backref='player_character')
 
@@ -34,7 +34,7 @@ class NonPlayerCharacter(db.Model, SerializerMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     npc_name = db.Column(db.String)
-    initiative = db.Column(db.Integer)
+    # initiative = db.Column(db.Integer)
 
     campaigns = db.relationship('Campaign', backref='non_player_character')
 

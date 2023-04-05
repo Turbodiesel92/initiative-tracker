@@ -3,29 +3,28 @@
 from random import randint, choice as rc
 
 from app import app
-from models import db, PlayerCharacter, NonPlayerCharacter, User, Campaign, TurnTracker
+from models import db, PlayerCharacter, NonPlayerCharacter, User, Campaign
 
 if __name__ == '__main__':
     with app.app_context():
-        # print('Clearing db...')
-        # PlayerCharacter.query.delete()
-        # NonPlayerCharacter.query.delete()
-        # User.query.delete()
-        # Campaign.query.delete()
-        # TurnTracker.query.delete()
+
+        db.session.query(PlayerCharacter).delete()
+        db.session.query(NonPlayerCharacter).delete()
+        db.session.query(User).delete()
+        db.session.query(Campaign).delete()
 
         print("Seeding player_characters...")
         player_characters = [
-            PlayerCharacter(name='Cerdic'),
-            PlayerCharacter(name='Sithious'),
-            PlayerCharacter(name='Sphinx'),
-            PlayerCharacter(name='Zero'),
-            PlayerCharacter(name='Ka-Dem-Sil'),
-            PlayerCharacter(name='Styr Earthaxe'),
-            PlayerCharacter(name='Xarxik'),
-            PlayerCharacter(name='Whurfim CopperFury'),
-            PlayerCharacter(name='Nevarth Lorana'),
-            PlayerCharacter(name='Weld Grimburst'),
+            PlayerCharacter(pc_name='Cerdic'),
+            PlayerCharacter(pc_name='Sithious'),
+            PlayerCharacter(pc_name='Sphinx'),
+            PlayerCharacter(pc_name='Zero'),
+            PlayerCharacter(pc_name='Ka-Dem-Sil'),
+            PlayerCharacter(pc_name='Styr Earthaxe'),
+            PlayerCharacter(pc_name='Xarxik'),
+            PlayerCharacter(pc_name='Whurfim CopperFury'),
+            PlayerCharacter(pc_name='Nevarth Lorana'),
+            PlayerCharacter(pc_name='Weld Grimburst'),
         ]
 
         db.session.add_all(player_characters)
@@ -34,16 +33,16 @@ if __name__ == '__main__':
 
         print("Seeding non_player_characters...")
         non_player_characters = [
-            NonPlayerCharacter(name='Bodak'),
-            NonPlayerCharacter(name='Goblin'),
-            NonPlayerCharacter(name='Demogorgon'),
-            NonPlayerCharacter(name='Velociraptor'),
-            NonPlayerCharacter(name='Pheonix'),
-            NonPlayerCharacter(name='Neogi'),
-            NonPlayerCharacter(name='Annis Hag'),
-            NonPlayerCharacter(name='Chitine'),
-            NonPlayerCharacter(name='Rutterkin'),
-            NonPlayerCharacter(name='Flail Snail'),
+            NonPlayerCharacter(npc_name='Bodak'),
+            NonPlayerCharacter(npc_name='Goblin'),
+            NonPlayerCharacter(npc_name='Demogorgon'),
+            NonPlayerCharacter(npc_name='Velociraptor'),
+            NonPlayerCharacter(npc_name='Pheonix'),
+            NonPlayerCharacter(npc_name='Neogi'),
+            NonPlayerCharacter(npc_name='Annis Hag'),
+            NonPlayerCharacter(npc_name='Chitine'),
+            NonPlayerCharacter(npc_name='Rutterkin'),
+            NonPlayerCharacter(npc_name='Flail Snail'),
         ]
 
         db.session.add_all(non_player_characters)
@@ -53,7 +52,7 @@ if __name__ == '__main__':
         users = [
             User(username='Matthew'),
             User(password='1234abcd'),
-            User(campaign_name='Wanders Palace'),
+            User(campaign_id='Wanders Palace'),
 
         ]
 
