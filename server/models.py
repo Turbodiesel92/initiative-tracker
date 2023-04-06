@@ -7,7 +7,7 @@ from config import db, bcrypt
 class User(db.Model, SerializerMixin):
     __tablename__ = 'users'
 
-    # serialize_rules = ('')
+    serialize_rules = ('-non_player_character_player_characters.player_character', '-non_player_characters.player_characters')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String)
@@ -36,18 +36,17 @@ class User(db.Model, SerializerMixin):
 class PlayerCharacter(db.Model, SerializerMixin):
     __tablename__ = 'player_characters'
 
-    # serialize_rules = ('')
+    serialize_rules = ('-non_player_characters.player_characters', '-campaigns')
 
     id = db.Column(db.Integer, primary_key=True)
     pc_name = db.Column(db.String)
-    # initiative = db.Column(db.Integer)
 
     campaigns = db.relationship('Campaign', backref='player_character')
 
 class NonPlayerCharacter(db.Model, SerializerMixin):
     __tablename__ = 'non_player_characters'
 
-    # serialize_rules = ('')
+    serialize_rules = ('-player_characters.non_player_characters', '-campaigns')
 
     id = db.Column(db.Integer, primary_key=True)
     npc_name = db.Column(db.String)
@@ -58,7 +57,7 @@ class NonPlayerCharacter(db.Model, SerializerMixin):
 class Campaign(db.Model, SerializerMixin):
     __tablename__ = 'campaigns'
 
-    # serialize_rules = ('')
+    serialize_rules = ('-player_character.non_player_character_player_characters', '-non_player_character.non_player_character_player_characters')
 
     id = db.Column(db.Integer, primary_key=True)
     campaign_name = db.Column(db.String)
