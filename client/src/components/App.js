@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from "react-router-dom";
-import NavBar from "./NavBar";
-import Login from "./Login";
+import { Switch, Route } from 'react-router-dom'
+import NavBar from './NavBar'
+import Login from './Login'
+import TurnTracker from './TurnTracker'
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null)
 
   useEffect(() => {
     // auto-login
     fetch("/check_session").then((r) => {
       if (r.ok) {
-        r.json().then((user) => setUser(user));
+        r.json().then((user) => setUser(user))
       }
-    });
-  }, []);
+    })
+  }, [])
 
-  if (!user) return <Login onLogin={setUser} />;
+  if (!user) return <Login onLogin={setUser} />
 
   return (
     <>
@@ -34,4 +35,4 @@ function App() {
   );
 }
 
-export default App;
+export default App

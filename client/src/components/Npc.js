@@ -35,4 +35,4 @@ function Npc() {
 
 }
 
-export default(Npc)
+export default Npc
