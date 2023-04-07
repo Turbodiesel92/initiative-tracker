@@ -27,7 +27,7 @@ function Login({ onLogin }) {
           <Divider />
           <p>
             Already have an account? &nbsp;
-            <Button color="secondary" onClick={() => setShowLogin(true)}>
+            <Button color="#0AD2FF" onClick={() => setShowLogin(true)}>
               Log In
             </Button>
           </p>
