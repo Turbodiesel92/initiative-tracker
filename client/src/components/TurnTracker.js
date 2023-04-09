@@ -1,4 +1,3 @@
-import React from react
 import PlayerCharacter from './PlayerCharacter'
 import Npc from './Npc'
 
