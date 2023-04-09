@@ -118,6 +118,27 @@ class NonPlayerCharacters(Resource):
             jsonify(nonplayercharacter_dicts),
             200
         )
+    def post(self):
+
+        try:
+            new_npc = NonPlayerCharacter(
+                npc_name=request.get_json()['npc_name'],
+            )
+
+            db.session.add(new_npc)
+            db.session.commit()
+
+            nonplayercharacter_dicts = [nonplayercharacter.to_dict() for nonplayercharacter in NonPlayerCharacter.query.all()]
+
+            return make_response(
+                jsonify(nonplayercharacter_dicts),
+                201
+            )
+        except:
+            return make_response(
+                {'error': ["validation errors"] },
+                400
+            )
 
 api.add_resource(NonPlayerCharacters, '/npc', endpoint='npc')
 
@@ -130,6 +151,27 @@ class PlayerCharacters(Resource):
             jsonify(playercharacter_dicts),
             200
         )
+    def post(self):
+
+        try:
+            new_pc = PlayerCharacter(
+                pc_name=request.get_json()['pc_name'],
+            )
+
+            db.session.add(new_pc)
+            db.session.commit()
+
+            playercharacter_dicts = [playercharacter.to_dict() for playercharacter in PlayerCharacter.query.all()]
+
+            return make_response(
+                jsonify(playercharacter_dicts),
+                201
+            )
+        except:
+            return make_response(
+                {'error': ["validation errors"] },
+                400
+            )
 
 api.add_resource(PlayerCharacters, '/playercharacter', endpoint='playercharacter')
 
