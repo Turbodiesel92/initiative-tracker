@@ -1,11 +1,11 @@
-import { useState } from "react";
-import styled from "styled-components";
-import LoginForm from "./LoginForm";
-import SignUpForm from "./SignUpForm";
-import { Button } from "../styles";
+import { useState } from 'react'
+import styled from 'styled-components'
+import LoginForm from './LoginForm'
+import SignUpForm from './SignUpForm'
+import { Button } from '../styles'
 
 function Login({ onLogin }) {
-  const [showLogin, setShowLogin] = useState(true);
+  const [showLogin, setShowLogin] = useState(true)
 
   return (
     <Wrapper>
