@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import { Button } from "../styles";
+import { Button } from "../styles";
 
 function NavBar({ user, setUser }) {
   function handleLogoutClick() {
@@ -15,14 +15,31 @@ function NavBar({ user, setUser }) {
   return (
     <Wrapper>
 
-        <h1>Turn Tracker</h1>
+      <h1>Turn Tracker</h1>
       <Nav>
-        {/* <Button as={Link} to="/new"> */}
-          {/* New Recipe */}
-        {/* </Button> */}
-        {/* <Button variant="outline" onClick={handleLogoutClick}>
+        <Button as={Link} to="/">
+          Home
+        </Button>
+
+        <Button as={Link} to="/turntracker">
+          TurnTracker
+        </Button>
+
+        <Button as={Link} to="/login">
+          Login
+        </Button>
+
+        <Button as={Link} to="/playercharacter">
+          PC
+        </Button>
+
+        <Button as={Link} to="/npc">
+          NPC
+        </Button>
+
+        <Button variant="outline" onClick={handleLogoutClick}>
           Logout
-        </Button> */}
+        </Button>
       </Nav>
     </Wrapper>
   );

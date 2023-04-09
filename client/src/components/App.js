@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import NavBar from './NavBar'
 import Login from './Login'
 import TurnTracker from './TurnTracker'
+import PlayerCharacter from "./PlayerCharacter";
+import Npc from './Npc'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -20,16 +22,22 @@ function App() {
 
   return (
     <>
-      <NavBar user={user} setUser={setUser} />
-      <main>
+      <main className="container mx-auto">
+        <BrowserRouter>
+          <Route>
+            <NavBar user={user} setUser={setUser} />
+          </Route>
         <Switch>
-          <Route path="/new">
-            {/* <NewRecipe user={user} /> */}
+
+          <Route exact path="/">
+            Home
           </Route>
-          <Route path="/">
-            {/* <RecipeList /> */}
-          </Route>
+          <Route path="/npc" component={Npc} />
+          <Route path="/playercharacter" component={PlayerCharacter} />
+          <Route path="/turntracker" component={TurnTracker} />
+          <Route path="/login" component={Login} />
         </Switch>
+        </BrowserRouter>
       </main>
     </>
   );
