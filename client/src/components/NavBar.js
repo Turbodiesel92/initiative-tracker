@@ -21,6 +21,10 @@ function NavBar({ user, setUser }) {
           Home
         </Button>
 
+        <Button as={Link} to="/turntracker">
+          TurnTracker
+        </Button>
+
         <Button as={Link} to="/login">
           Login
         </Button>

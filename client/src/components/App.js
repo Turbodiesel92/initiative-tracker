@@ -22,7 +22,7 @@ function App() {
 
   return (
     <>
-      <main>
+      <main className="container mx-auto">
         <BrowserRouter>
           <Route>
             <NavBar user={user} setUser={setUser} />
@@ -30,7 +30,7 @@ function App() {
         <Switch>
 
           <Route exact path="/">
-            {PlayerCharacter}
+            Home
           </Route>
           <Route path="/npc" component={Npc} />
           <Route path="/playercharacter" component={PlayerCharacter} />
