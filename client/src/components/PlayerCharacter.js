@@ -1,4 +1,3 @@
-let pcName = ''
 
 function handleSubmit(event) {
     event.preventDefault()
@@ -37,8 +36,8 @@ function PlayerCharacter () {
                 <form onSubmit={handleSubmit} className="mt-5 sm:flex sm:items-center">
 
                     <div className="w-full sm:max-w-xs">
-                        <label htmlFor="email" className="sr-only">
-                            Email
+                        <label htmlFor="pc_name" className="sr-only">
+                            Player Character Name
                         </label>
                         <input
                             type="text"
