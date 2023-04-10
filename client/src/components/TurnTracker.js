@@ -27,7 +27,7 @@ function TurnTracker() {
         <div>
             {(!isStarted) ? <h1>Not Started</h1> : <h1>Started</h1>}
             {(!isStarted) ?
-                <form onSubmit={handleStart} if>
+                <form onSubmit={handleStart}>
                     <table className="w-full">
                         <thead>
                         <tr>

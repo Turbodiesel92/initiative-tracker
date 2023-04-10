@@ -5,6 +5,7 @@ import Login from './Login'
 import TurnTracker from './TurnTracker'
 import PlayerCharacter from "./PlayerCharacter";
 import Npc from './Npc'
+import Home from './Home'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -28,10 +29,7 @@ function App() {
             <NavBar user={user} setUser={setUser} />
           </Route>
         <Switch>
-
-          <Route exact path="/">
-            Home
-          </Route>
+          <Route path="/home" component={Home} />
           <Route path="/npc" component={Npc} />
           <Route path="/playercharacter" component={PlayerCharacter} />
           <Route path="/turntracker" component={TurnTracker} />

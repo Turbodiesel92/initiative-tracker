@@ -17,7 +17,7 @@ function NavBar({ user, setUser }) {
 
       <h1>Turn Tracker</h1>
       <Nav>
-        <Button as={Link} to="/">
+        <Button as={Link} to="/home">
           Home
         </Button>
 

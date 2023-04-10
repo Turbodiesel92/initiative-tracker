@@ -9,7 +9,7 @@ function Login({ onLogin }) {
 
   return (
     <Wrapper>
-      <Logo>Turn Tracker</Logo>
+      <Logo>Login Here</Logo>
       {showLogin ? (
         <>
           <LoginForm onLogin={onLogin} />
