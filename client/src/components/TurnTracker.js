@@ -8,7 +8,29 @@ function TurnTracker() {
 
     function handleStart(event) {
         event.preventDefault()
-        setIsStarted(true)
+
+        const updatedPlayerCharacters = playerCharacters.map((pc) => {
+            const initiativeInput = document.getElementById(`pc-initiative-${pc.id}`)
+            const initiativeScore = parseInt(initiativeInput.ariaValueMax, 10)
+            return {
+                ...pc,
+                initiative: initiativeScore,
+            }
+        })
+
+    const updatedNonPlayerCharacters = nonPlayerCharacters.map((npc) => {
+        const initiativeInput = document.getElementById(`npc-initiative-${npc.id}`)
+        const initiativeScore = parseInt(initiativeInput.value, 10)
+        return {
+            ...npc,
+            initiative: initiativeScore,
+        }
+    })
+
+    setPlayerCharacters(updatedPlayerCharacters)
+    setNonPlayerCharacters(updatedNonPlayerCharacters)
+
+    setIsStarted(true)
     }
 
     useEffect(() => {
@@ -40,26 +62,28 @@ function TurnTracker() {
 
                         {playerCharacters.map((pc) => (
                             <tr key={`pc${pc.id}`}>
-                                <td>
-                                    {pc.pc_name}
-                                </td>
+                                <td>{pc.pc_name}</td>
                                 <td>
                                     <input
+                                        id={`pc-initiative-${pc.id}`}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
                                         type="number"
+
                                         />
                                 </td>
                             </tr>
                         ))}
                         {nonPlayerCharacters.map((npc) => (
                             <tr key={`npc${npc.id}`}>
-                                <td>
-                                    {npc.npc_name}
-                                </td>
+                                <td>{npc.npc_name}</td>
                                 <td>
                                     <input
+                                        id={`npc-initiative-${npc.id}`}
                                         className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+
                                         type="number"
+
                                         />
                                 </td>
                             </tr>
