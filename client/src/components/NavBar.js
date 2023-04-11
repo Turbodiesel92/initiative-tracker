@@ -24,22 +24,27 @@ function NavBar({ user, setUser }) {
         <Button as={Link} to="/turntracker">
           TurnTracker
         </Button>
+        {user ? (
+          <>
+            <Button as={Link} to="/playercharacter">
+              PC
+            </Button>
+
+            <Button as={Link} to="/npc">
+              NPC
+            </Button>
+
+            <Button onClick={handleLogoutClick}>
+              Logout
+            </Button>
+          </>
+        ) : (
 
         <Button as={Link} to="/login">
           Login
         </Button>
+        )}
 
-        <Button as={Link} to="/playercharacter">
-          PC
-        </Button>
-
-        <Button as={Link} to="/npc">
-          NPC
-        </Button>
-
-        <Button onClick={handleLogoutClick}>
-          Logout
-        </Button>
       </Nav>
     </Wrapper>
   );
@@ -51,19 +56,6 @@ const Wrapper = styled.header`
   align-items: center;
   padding: 8px;
 `;
-
-// const Logo = styled.h1`
-//   font-family: "Helvetica-BoldOblique";
-//   font-size: 3rem;
-//   color: #171FFF;
-//   margin: 0;
-//   line-height: 1;
-
-//   a {
-//     color: inherit;
-//     text-decoration: none;
-//   }
-// `;
 
 const Nav = styled.nav`
   display: flex;
