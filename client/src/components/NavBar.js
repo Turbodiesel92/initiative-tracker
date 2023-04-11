@@ -37,7 +37,7 @@ function NavBar({ user, setUser }) {
           NPC
         </Button>
 
-        <Button variant="outline" onClick={handleLogoutClick}>
+        <Button onClick={handleLogoutClick}>
           Logout
         </Button>
       </Nav>
@@ -52,18 +52,18 @@ const Wrapper = styled.header`
   padding: 8px;
 `;
 
-const Logo = styled.h1`
-  font-family: "Helvetica-BoldOblique";
-  font-size: 3rem;
-  color: #171FFF;
-  margin: 0;
-  line-height: 1;
+// const Logo = styled.h1`
+//   font-family: "Helvetica-BoldOblique";
+//   font-size: 3rem;
+//   color: #171FFF;
+//   margin: 0;
+//   line-height: 1;
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-`;
+//   a {
+//     color: inherit;
+//     text-decoration: none;
+//   }
+// `;
 
 const Nav = styled.nav`
   display: flex;

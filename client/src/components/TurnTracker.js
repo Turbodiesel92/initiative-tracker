@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Button } from "../styles"
 
 function TurnTracker() {
   const [playerCharacters, setPlayerCharacters] = useState([]);
@@ -91,12 +92,12 @@ function TurnTracker() {
               ))}
             </tbody>
           </table>
-          <button
+          <Button
             type="submit"
             className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto"
           >
             Start Combat
-          </button>
+          </Button>
         </form>
       ) : (
         <table className="w-full">
@@ -115,7 +116,7 @@ function TurnTracker() {
                   <td>{character.initiative}</td>
                 </tr>
               ))}
-            <button
+            <Button
               type="button"
               className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
               onClick={() => {
@@ -123,7 +124,7 @@ function TurnTracker() {
               }}
             >
               End Combat
-            </button>
+            </Button>
           </tbody>
         </table>
       )}
