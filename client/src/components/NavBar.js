@@ -2,8 +2,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { Button } from "../styles";
-import { UserContext } from './App'
-
+import { UserContext } from "./App";
 
 function NavBar() {
   function handleLogoutClick() {
@@ -14,11 +13,10 @@ function NavBar() {
     });
   }
 
-  const [user, setUser] = useContext(UserContext)
+  const [user, setUser] = useContext(UserContext);
 
   return (
     <Wrapper>
-
       <h1>Turn Tracker</h1>
       <Nav>
         <Button as={Link} to="/home">
@@ -38,17 +36,13 @@ function NavBar() {
               NPC
             </Button>
 
-            <Button onClick={handleLogoutClick}>
-              Logout
-            </Button>
+            <Button onClick={handleLogoutClick}>Logout</Button>
           </>
         ) : (
-
-        <Button as={Link} to="/login">
-          Login
-        </Button>
+          <Button as={Link} to="/login">
+            Login
+          </Button>
         )}
-
       </Nav>
     </Wrapper>
   );
