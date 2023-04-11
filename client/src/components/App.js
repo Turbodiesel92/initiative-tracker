@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, createContext } from "react";
 import { Switch, Route, BrowserRouter } from 'react-router-dom'
 import NavBar from './NavBar'
 import Login from './Login'
@@ -6,6 +6,8 @@ import TurnTracker from './TurnTracker'
 import PlayerCharacter from "./PlayerCharacter";
 import Npc from './Npc'
 import Home from './Home'
+
+export const UserContext = createContext()
 
 function App() {
   const [user, setUser] = useState(null)
@@ -23,10 +25,11 @@ function App() {
 
   return (
     <>
+      <UserContext.Provider value = {[user, setUser]}>
       <main className="container mx-auto">
         <BrowserRouter>
           <Route>
-            <NavBar user={user} setUser={setUser} />
+            <NavBar />
           </Route>
         <Switch>
           <Route path="/home" component={Home} />
@@ -37,6 +40,7 @@ function App() {
         </Switch>
         </BrowserRouter>
       </main>
+      </UserContext.Provider>
     </>
   );
 }
