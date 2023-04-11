@@ -5,14 +5,14 @@
 # Remote library imports
 from flask import request, session, make_response, jsonify
 from flask_restful import Api, Resource
-
+from sqlalchemy.orm import validates
 from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, PlayerCharacter, NonPlayerCharacter, Campaign
 
 api = Api(app)
 
-@app.route('/')
+@app.route('/home')
 def home():
     return ''
 
@@ -106,6 +106,12 @@ class Users(Resource):
             jsonify(user_dicts),
             200
         )
+
+    @validates('user')
+    def validate_user(self, key, user):
+        if user != '':
+            raise ValueError('Username must be a string')
+        return user
 
 api.add_resource(Users, '/user', endpoint='user')
 
