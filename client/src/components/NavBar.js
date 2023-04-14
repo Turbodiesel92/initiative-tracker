@@ -53,6 +53,11 @@ const Wrapper = styled.header`
   justify-content: center;
   align-items: center;
   padding: 8px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 const Nav = styled.nav`
@@ -60,6 +65,11 @@ const Nav = styled.nav`
   gap: 4px;
   position: absolute;
   right: 8px;
+
+  @media (max-width: 768px) {
+    position: static;
+    margin-top: 16px;
+  }
 `;
 
 export default NavBar;

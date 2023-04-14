@@ -69,18 +69,20 @@ function TurnTracker() {
               {playerCharacters.map((pc) => (
                 <tr key={`pc${pc.id}`}>
                   <td>
-                    {pc.pc_name}
-                    <Button
-                      type="button"
-                      className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      onClick={() => {
-                        setPlayerCharacters((prevCharacters) =>
-                          prevCharacters.filter((c) => c.id !== pc.id)
-                        );
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <div className="flex items-center justify-between">
+                      <span>{pc.pc_name}</span>
+                      <Button
+                        type="button"
+                        className="rounded bg-indigo-600 px-2 py-1 text-xs font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={() => {
+                          setPlayerCharacters((prevCharacters) =>
+                            prevCharacters.filter((c) => c.id !== pc.id)
+                          );
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </td>
                   <td>
                     <input
@@ -94,16 +96,18 @@ function TurnTracker() {
               {nonPlayerCharacters.map((npc) => (
                 <tr key={`npc${npc.id}`}>
                   <td>
-                    {npc.npc_name}
-                    <Button
-                      onClick={() => {
-                        setNonPlayerCharacters((prevCharacters) =>
-                          prevCharacters.filter((c) => c.id !== npc.id)
-                        );
-                      }}
-                    >
-                      Delete
-                    </Button>
+                    <div className="flex items-center justify-between">
+                      <span>{npc.npc_name}</span>
+                      <Button
+                        onClick={() => {
+                          setNonPlayerCharacters((prevCharacters) =>
+                            prevCharacters.filter((c) => c.id !== npc.id)
+                          );
+                        }}
+                      >
+                        Delete
+                      </Button>
+                    </div>
                   </td>
                   <td>
                     <input
