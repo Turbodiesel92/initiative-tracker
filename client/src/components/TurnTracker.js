@@ -5,6 +5,7 @@ function TurnTracker() {
   const [playerCharacters, setPlayerCharacters] = useState([]);
   const [nonPlayerCharacters, setNonPlayerCharacters] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
+  const [activePlayerIndex, setActivePlayerIndex] = useState(0)
 
   function handleStart(event) {
     event.preventDefault();
@@ -53,6 +54,10 @@ function TurnTracker() {
       .then((response) => response.json())
       .then(setNonPlayerCharacters);
   }, []);
+
+  function handleNext() {
+    setActivePlayerIndex((prevIndex) => (prevIndex + 1) % (playerCharacters.length + nonPlayerCharacters.length));
+  }
 
   return (
     <div>
@@ -128,7 +133,14 @@ function TurnTracker() {
           </Button>
         </form>
       ) : (
+
         <table className="w-full">
+                <Button
+        onClick={handleNext}
+        className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto">
+          Next Actor
+        </Button>
+
           <thead>
             <tr>
               <th>Name</th>
@@ -156,6 +168,7 @@ function TurnTracker() {
           </tbody>
         </table>
       )}
+
     </div>
   );
 }
