@@ -5,7 +5,7 @@ function TurnTracker() {
   const [playerCharacters, setPlayerCharacters] = useState([]);
   const [nonPlayerCharacters, setNonPlayerCharacters] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
-  const [activePlayerIndex, setActivePlayerIndex] = useState(0)
+  const [activePlayerIndex, setActivePlayerIndex] = useState(0);
 
   function handleStart(event) {
     event.preventDefault();
@@ -56,7 +56,10 @@ function TurnTracker() {
   }, []);
 
   function handleNext() {
-    setActivePlayerIndex((prevIndex) => (prevIndex + 1) % (playerCharacters.length + nonPlayerCharacters.length));
+    setActivePlayerIndex(
+      (prevIndex) =>
+        (prevIndex + 1) % (playerCharacters.length + nonPlayerCharacters.length)
+    );
   }
 
   return (
@@ -133,13 +136,13 @@ function TurnTracker() {
           </Button>
         </form>
       ) : (
-
         <table className="w-full">
-                <Button
-        onClick={handleNext}
-        className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto">
-          Next Actor
-        </Button>
+          <Button
+            onClick={handleNext}
+            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
+          >
+            Next Actor
+          </Button>
 
           <thead>
             <tr>
@@ -150,8 +153,11 @@ function TurnTracker() {
           <tbody>
             {[...playerCharacters, ...nonPlayerCharacters]
               .sort((a, b) => b.initiative - a.initiative)
-              .map((character) => (
-                <tr key={character.id}>
+              .map((character, index) => (
+                <tr
+                  key={character.id}
+                  className={index === activePlayerIndex ? 'active-row' : ''}
+                >
                   <td>{character.pc_name || character.npc_name}</td>
                   <td>{character.initiative}</td>
                 </tr>
@@ -168,7 +174,6 @@ function TurnTracker() {
           </tbody>
         </table>
       )}
-
     </div>
   );
 }
