@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
 import { Button } from "../styles";
+// import { HighlightedRow } from "../styles";
 
 function TurnTracker() {
   const [playerCharacters, setPlayerCharacters] = useState([]);
   const [nonPlayerCharacters, setNonPlayerCharacters] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
+
+  // Function for starting and displaying the tracker
 
   function handleStart(event) {
     event.preventDefault();
@@ -43,6 +46,8 @@ function TurnTracker() {
     setIsStarted(true);
   }
 
+  // Fetching all the actors
+
   useEffect(() => {
     fetch("/playercharacter")
       .then((response) => response.json())
@@ -74,8 +79,11 @@ function TurnTracker() {
               </tr>
             </thead>
             <tbody>
-              {playerCharacters.map((pc) => (
-                <tr key={`pc${pc.id}`}>
+              {playerCharacters.map((pc, index) => (
+                <tr
+                  key={`pc${pc.id}-${index}`}
+                  className={index === activePlayerIndex ? "active-row" : ""}
+                >
                   <td>
                     <div className="flex items-center justify-between">
                       <span>{pc.pc_name}</span>
@@ -101,8 +109,11 @@ function TurnTracker() {
                   </td>
                 </tr>
               ))}
-              {nonPlayerCharacters.map((npc) => (
-                <tr key={`npc${npc.id}`}>
+              {nonPlayerCharacters.map((npc, index) => (
+                <tr
+                  key={`npc${npc.id}-${index}`}
+                  className={index === activePlayerIndex ? "active-row" : ""}
+                >
                   <td>
                     <div className="flex items-center justify-between">
                       <span>{npc.npc_name}</span>
@@ -128,6 +139,9 @@ function TurnTracker() {
               ))}
             </tbody>
           </table>
+
+          {/* Button for kicking things off */}
+
           <Button
             type="submit"
             className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:ml-3 sm:mt-0 sm:w-auto"
@@ -136,14 +150,9 @@ function TurnTracker() {
           </Button>
         </form>
       ) : (
-        <table className="w-full">
-          <Button
-            onClick={handleNext}
-            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
-          >
-            Next Actor
-          </Button>
+        // Button for advancing the actor marker
 
+        <table className="w-full">
           <thead>
             <tr>
               <th>Name</th>
@@ -151,26 +160,45 @@ function TurnTracker() {
             </tr>
           </thead>
           <tbody>
+            {/* <HighlightedRow className="active-row"> */}
             {[...playerCharacters, ...nonPlayerCharacters]
               .sort((a, b) => b.initiative - a.initiative)
               .map((character, index) => (
                 <tr
                   key={character.id}
-                  className={index === activePlayerIndex ? 'active-row' : ''}
+                  className={index === activePlayerIndex ? "active-row" : ""}
                 >
                   <td>{character.pc_name || character.npc_name}</td>
                   <td>{character.initiative}</td>
                 </tr>
               ))}
-            <Button
-              type="button"
-              className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
-              onClick={() => {
-                setIsStarted(false);
-              }}
+
+          <tr>
+            <td>
+          <Button
+            onClick={handleNext}
+            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
             >
-              End Combat
-            </Button>
+            Next Character
+          </Button>
+
+            {/* Button for when the encounter is over */}
+
+          <Button
+            type="button"
+            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
+            onClick={() => {
+              setIsStarted(false);
+            }}
+          >
+            End Combat
+          </Button>
+
+            </td>
+          </tr>
+
+          {/* </HighlightedRow> */}
+
           </tbody>
         </table>
       )}
