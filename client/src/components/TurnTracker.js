@@ -80,6 +80,7 @@ function TurnTracker() {
             </thead>
             <tbody>
               {playerCharacters.map((pc, index) => (
+
                 <tr
                   key={`pc${pc.id}-${index}`}
                   className={index === activePlayerIndex ? "active-row" : ""}
@@ -164,6 +165,7 @@ function TurnTracker() {
             {[...playerCharacters, ...nonPlayerCharacters]
               .sort((a, b) => b.initiative - a.initiative)
               .map((character, index) => (
+                console.log(index, activePlayerIndex, index === activePlayerIndex),
                 <tr
                   key={character.id}
                   className={index === activePlayerIndex ? "active-row" : ""}
