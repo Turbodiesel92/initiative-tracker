@@ -83,7 +83,6 @@ function TurnTracker() {
 
                 <tr
                   key={`pc${pc.id}-${index}`}
-                  className={index === activePlayerIndex ? "active-row" : ""}
                 >
                   <td>
                     <div className="flex items-center justify-between">
@@ -113,7 +112,6 @@ function TurnTracker() {
               {nonPlayerCharacters.map((npc, index) => (
                 <tr
                   key={`npc${npc.id}-${index}`}
-                  className={index === activePlayerIndex ? "active-row" : ""}
                 >
                   <td>
                     <div className="flex items-center justify-between">
