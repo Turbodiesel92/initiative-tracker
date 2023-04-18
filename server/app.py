@@ -53,6 +53,7 @@ class Signup(Resource):
 
             return {'error': '422 Unprocessable Entity'}, 422
 
+api.add_resource(Signup, '/signup', endpoint='signup')
 
 class CheckSession(Resource):
 
@@ -65,6 +66,8 @@ class CheckSession(Resource):
             return user.to_dict(), 200
 
         return {'error': '401 Unauthorized'}, 401
+
+api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
 class Login(Resource):
 
@@ -85,6 +88,8 @@ class Login(Resource):
 
         return {'error': '401 Unauthorized'}, 401
 
+api.add_resource(Login, '/login', endpoint='login')
+
 class Logout(Resource):
 
     def delete(self):
@@ -96,6 +101,8 @@ class Logout(Resource):
             return {}, 204
 
         return {'error': '401 Unauthorized'}, 401
+
+api.add_resource(Logout, '/logout', endpoint='logout')
 
 class Users(Resource):
     def get(self):
@@ -191,12 +198,6 @@ class Campaigns(Resource):
             200
         )
 api.add_resource(Campaigns, '/campaign', endpoint='campaign')
-
-api.add_resource(Signup, '/signup', endpoint='signup')
-api.add_resource(CheckSession, '/check_session', endpoint='check_session')
-api.add_resource(Login, '/login', endpoint='login')
-api.add_resource(Logout, '/logout', endpoint='logout')
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

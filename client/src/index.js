@@ -18,10 +18,10 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    background-color: #ccc;
+    background-color: #eee;
   }
   .active-row {
-    background-color: green;
+    background-color: #c9ff00;
 }
 `;
 
