@@ -7,6 +7,7 @@ function TurnTracker() {
   const [nonPlayerCharacters, setNonPlayerCharacters] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
+  const [updatedCharacterName, setUpdatedCharacterName] = useState('')
 
   // Function for starting and displaying the tracker
 

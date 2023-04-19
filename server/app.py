@@ -186,7 +186,25 @@ class PlayerCharacters(Resource):
                 400
             )
 
-api.add_resource(PlayerCharacters, '/playercharacter', endpoint='playercharacter')
+    def post(self, pc_id):
+        try:
+            pc_to_update = PlayerCharacter.query.get_or_404(pc_id)
+            pc_to_update.pc_name = request.get_json().get('pc_name', pc_to_update.pc_name)
+
+            db.session.commit()
+
+            return make_response(
+                {'message': 'Player character updated successfully'},
+                200
+            )
+        except:
+            return make_response(
+                {'error': ['Failed to update player character']},
+                400
+            )
+
+api.add_resource(PlayerCharacters, '/playercharacter', '/playercharacter/<int:pc_id>', endpoint='playercharacter')
+
 
 class Campaigns(Resource):
     def get(self):
