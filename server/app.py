@@ -186,11 +186,12 @@ class PlayerCharacters(Resource):
                 400
             )
 
-    def post(self, pc_id):
+    def patch(self, pc_id):
         try:
             pc_to_update = PlayerCharacter.query.get_or_404(pc_id)
-            pc_to_update.pc_name = request.get_json().get('pc_name', pc_to_update.pc_name)
-
+            pc_to_update.pc_name = request.get_json().get('pc_name')
+            print (request.get_json().get('pc_name'))
+            db.session.add(pc_to_update)
             db.session.commit()
 
             return make_response(
