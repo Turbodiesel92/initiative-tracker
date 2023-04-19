@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 function PlayerCharacter() {
   const [characters, setCharacters] = useState([]);
   const [selectedCharacter, setSelectedCharacter] = useState(null);
+  const [newName, setNewName] = useState("")
 
   // fetching the charters from the db
   useEffect(() => {
@@ -13,8 +14,23 @@ function PlayerCharacter() {
 
   // edit handler
 
-  function handleEdit(id) {
-    fetch(`/playercharacter/${id}`)
+  function handleNameChange(event) {
+    setNewName(event.target.value)
+  }
+
+  function handleEdit(event) {
+    event.preventDefault();
+    console.log(event.target)
+    const formData = {
+      pc_name: newName
+    };
+    fetch(`/playercharacter/${selectedCharacter.id}`,{
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
       .then((response) => response.json())
       .then((data) => {
         setSelectedCharacter(data);
@@ -26,7 +42,7 @@ function PlayerCharacter() {
   function handleSubmit(event) {
     event.preventDefault();
     const formData = {
-      pc_name: event.target.pcName.value,
+      pc_name: event.target.name.value,
     };
 
     // if there is a selected character - update - if no character - add new
@@ -95,13 +111,16 @@ function PlayerCharacter() {
             <select
           value={selectedCharacter ? selectedCharacter.pc_name : ""}
           onChange={(event) => {
-            setSelectedCharacter({ id: null, pc_name: event.target.value });
+            const index = event.target.selectedIndex;
+            const el = event.target.childNodes[index]
+            const option =  el.getAttribute('id');
+            setSelectedCharacter({ id: option, pc_name: event.target.value });
           }}
           className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
         >
           <option value="">Select a character</option>
           {characters.map((name) => (
-            <option key={name.id} value={name.pc_name}>
+            <option key={name.id} value={name.pc_name} id={name.id}>
               {name.pc_name}
             </option>
           ))}
@@ -112,14 +131,17 @@ function PlayerCharacter() {
               id="pcName"
               className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               placeholder="character name"
-              defaultValue={selectedCharacter ? selectedCharacter.pc_name : ""}
+              // defaultValue={selectedCharacter ? selectedCharacter.pc_name : ""}
+              onChange={handleNameChange}
+              value={newName}
             />
           </div>
 
           {selectedCharacter ? (
             <div className="mt-3 flex">
               <button
-                type="submit"
+                type="button"
+                onClick={handleEdit}
                 className="inline-flex items-center justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
                 Save
