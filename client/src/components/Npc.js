@@ -1,3 +1,5 @@
+import NpcDropdown from "./NpcDropdown";
+
 function handleSubmit(event) {
   event.preventDefault();
   const formData = {
@@ -52,6 +54,7 @@ function NonPlayerCharacter() {
             Save
           </button>
         </form>
+        <NpcDropdown />
       </div>
     </div>
   );
