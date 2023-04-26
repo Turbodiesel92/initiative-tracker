@@ -1,4 +1,4 @@
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/solid'
 
@@ -7,7 +7,28 @@ function classNames(...classes) {
 }
 
 function NpcDropdown() {
+  const [npcs, setNpcs] = useState([])
+  const [error, setError] = useState(null)
+
+  useEffect(() => {
+    fetch('/npc')
+      .then(response => response.json())
+      .then(data => {
+        setNpcs(data)
+        console.log('npcs:', data)
+      })
+      .catch(error => console.log(error))
+  }, [])
+
+
+  if (error) {
+    return <div>{error}</div>
+  }
+
   return (
+    <>
+        {npcs.length> 0 &&
+
     <Menu as="div" className="relative inline-block text-left">
       <div>
         <Menu.Button className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
@@ -27,36 +48,26 @@ function NpcDropdown() {
       >
         <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Wanders Palace
-                </a>
-              )}
-            </Menu.Item>
-            <Menu.Item>
-              {({ active }) => (
-                <a
-                  href="#"
-                  className={classNames(
-                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                    'block px-4 py-2 text-sm'
-                  )}
-                >
-                  Ice Bound Lair
-                </a>
-              )}
-            </Menu.Item>
+            {npcs.map(npc => (
+                <Menu.Item key={npc.id}>
+                {({ active }) => (
+                  <button
+                    href='#'
+                    className={classNames(
+                        active ? "bg-gray-100 text-grey-900" : "text-grey-700", 'block px-4 py-2 text-sm'
+                )}
+                    >
+                    {npc.name}
+                  </button>
+                    )}
+              </Menu.Item>
+            ))}
           </div>
         </Menu.Items>
       </Transition>
     </Menu>
+    }
+    </>
   )
 }
 
