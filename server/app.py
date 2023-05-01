@@ -153,7 +153,25 @@ class NonPlayerCharacters(Resource):
                 400
             )
 
-api.add_resource(NonPlayerCharacters, '/npc', endpoint='npc')
+    def patch(self, npc_id):
+        try:
+            npc_to_update = NonPlayerCharacter.query.get_or_404(npc_id)
+            npc_to_update.npc_name = request.get_json().get('npc_name')
+
+            db.session.add(npc_to_update)
+            db.session.commit()
+
+            return make_response(
+                {'message': 'NPC updated Successfully'},
+                200
+            )
+        except:
+            return make_response(
+                {'error': ['Failed to update NPC']},
+                400
+            )
+
+api.add_resource(NonPlayerCharacters, '/npc', '/npc/<int:npc_id>', endpoint='npc')
 
 class PlayerCharacters(Resource):
     def get(self):
@@ -190,7 +208,7 @@ class PlayerCharacters(Resource):
         try:
             pc_to_update = PlayerCharacter.query.get_or_404(pc_id)
             pc_to_update.pc_name = request.get_json().get('pc_name')
-            print (request.get_json().get('pc_name'))
+
             db.session.add(pc_to_update)
             db.session.commit()
 

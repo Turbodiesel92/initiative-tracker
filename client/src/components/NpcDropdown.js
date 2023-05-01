@@ -9,25 +9,49 @@ function classNames(...classes) {
 function NpcDropdown() {
   const [npcs, setNpcs] = useState([]);
   const [error, setError] = useState(null);
+  const [editingNpc, setEditingNpc] = useState(null);
 
   useEffect(() => {
     fetch("/npc")
       .then((response) => response.json())
       .then((data) => {
-        console.log("npcs data:", data);
         setNpcs(data.map(npc => [npc.id, npc.npc_name ]));
       })
       .catch((error) => {
-        console.log(error);
         setError(error);
       });
   }, []);
 
-  if (error) {
-    return <div>{error}</div>;
+  const handleEditClick = (npcId) => {
+    console.log(npcs)
+    const npc = npcs.find((npc) => npc[0] === npcId);
+    if (!npc) {
+      return;
+    }
+    const newName = prompt(`Enter a new name for ${npc[1]}`);
+    if (!newName) {
+      return
+    }
+    fetch(`/npc/${npcId}`, {
+      method:'PATCH',
+      headers: {
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({ npc_name: newName }),
+    })
+    .then(response => {
+      if (response.ok) {
+        setNpcs((prevNpcs) =>
+          prevNpcs.map((npc) =>
+           npc[0] === npcId ? [npcId, newName] : npc));
+      } else {
+        throw new Error('Failed to update NPC')
+      }
+    })
+    .catch(error => {
+      setError(error)
+    })
   }
-
-  console.log('npcs state:', npcs)
 
   return (
     <>
@@ -56,7 +80,6 @@ function NpcDropdown() {
               <Menu.Items className="absolute left-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
                   {npcs.map(npc => {
-                    console.log('npc:', npc);
                     if (!npc[1]) {
                       return null;
                     }
@@ -71,6 +94,7 @@ function NpcDropdown() {
                                 : "text-grey-700",
                               "block px-4 py-2 text-sm"
                             )}
+                            onClick={() => handleEditClick(npc[0])}
                           >
                             {npc[1]}
                           </button>
