@@ -31,7 +31,7 @@ function NonPlayerCharacter() {
           Non Player character name
         </h3>
         <div className="mt-2 max-w-xl text-sm text-gray-500">
-          <p>Add npcs here.</p>
+          <p>Add, Edit, and Delete Non Player Character names here.</p>
         </div>
         <form onSubmit={handleSubmit} className="mt-5 sm:flex sm:items-center">
           <div className="w-full sm:max-w-xs">
