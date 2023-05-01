@@ -171,6 +171,17 @@ class NonPlayerCharacters(Resource):
                 400
             )
 
+    def delete(self, npc_id):
+        npc_to_delete = NonPlayerCharacter.query.get_or_404(npc_id)
+
+        db.session.delete(npc_to_delete)
+        db.session.commit()
+
+        return make_response(
+            {'message': 'NPC deleted Successfully'},
+            200
+        )
+
 api.add_resource(NonPlayerCharacters, '/npc', '/npc/<int:npc_id>', endpoint='npc')
 
 class PlayerCharacters(Resource):
@@ -221,6 +232,17 @@ class PlayerCharacters(Resource):
                 {'error': ['Failed to update player character']},
                 400
             )
+
+    def delete(self, pc_id):
+        pc_to_delete = PlayerCharacter.query.get_or_404(pc_id)
+
+        db.session.delete(pc_to_delete)
+        db.session.commit()
+
+        return make_response(
+            {'message': 'NPC deleted Successfully'},
+            200
+        )
 
 api.add_resource(PlayerCharacters, '/playercharacter', '/playercharacter/<int:pc_id>', endpoint='playercharacter')
 
