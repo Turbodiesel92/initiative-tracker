@@ -1,6 +1,6 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, TrashIcon } from "@heroicons/react/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
@@ -23,7 +23,6 @@ function NpcDropdown() {
   }, []);
 
   const handleEditClick = (npcId) => {
-    console.log(npcs)
     const npc = npcs.find((npc) => npc[0] === npcId);
     if (!npc) {
       return;
@@ -46,6 +45,24 @@ function NpcDropdown() {
            npc[0] === npcId ? [npcId, newName] : npc));
       } else {
         throw new Error('Failed to update NPC')
+      }
+    })
+    .catch(error => {
+      setError(error)
+    })
+  }
+
+  const handleDeleteClick = (npcId) => {
+    fetch(`/npc/${npcId}`, {
+      method:'DELETE',
+    })
+    .then(response => {
+      if (response.ok) {
+        setNpcs((prevNpcs) =>
+          prevNpcs.filter((npc) =>
+           npc[0] !== npcId));
+      } else {
+        throw new Error('Failed to delete NPC')
       }
     })
     .catch(error => {
@@ -86,6 +103,7 @@ function NpcDropdown() {
                     return (
                       <Menu.Item key={`menu-${npc[0]}`}>
                         {({ active }) => (
+                          <div className="flex items-Center justify-between">
                           <button
                             href="#"
                             className={classNames(
@@ -98,6 +116,14 @@ function NpcDropdown() {
                           >
                             {npc[1]}
                           </button>
+                          <button
+                              href="#"
+                              className="text-gray-400 hover:text-gray-500 w-5 h-5"
+                              onClick={() => handleDeleteClick(npc[0])}
+                              >
+                                <TrashIcon />
+                              </button>
+                              </div>
                         )}
                       </Menu.Item>
                     )
