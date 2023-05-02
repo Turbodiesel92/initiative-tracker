@@ -1,4 +1,9 @@
+import { useEffect, useState } from 'react'
 import NpcDropdown from "./NpcDropdown";
+
+function NonPlayerCharacter() {
+  const [npcList, setNpcList] = useState([])
+  const [newNpcName, setNewNpcName] = useState(null)
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -12,22 +17,34 @@ function handleSubmit(event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
-  }).then((r) => {
-    if (r.ok) {
-      r.json().then((data) => {
+  }).then((response) => {
+    if (response.ok) {
+      response.json().then((data) => {
         console.log(data);
-        const npcDropdown = document.getElementById('npc-dropdown')
-        const newOption = new Option(data.npc_name, data.npc_name)
-        npcDropdown.add(newOption)
         event.target.reset()
+        setNewNpcName(data.npc_name)
       });
     } else {
-      r.json().then((err) => console.log(err.errors));
+      response.json().then((err) => console.log(err.errors));
     }
   });
 }
 
-function NonPlayerCharacter() {
+useEffect(() => {
+  if (newNpcName) {
+    setNpcList((prevNpcList) => [...prevNpcList, newNpcName])
+    setNewNpcName(null)
+  }
+}, [newNpcName])
+
+useEffect(() => {
+  fetch('/npc')
+    .then((response) => response.json())
+    .then((data) => {
+      setNpcList(data.npcList);
+    });
+}, []);
+
   return (
     <div className="bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:p-6">
@@ -58,7 +75,7 @@ function NonPlayerCharacter() {
             Save
           </button>
         </form>
-        <NpcDropdown />
+        <NpcDropdown npcList={npcList} />
       </div>
     </div>
   );

@@ -1,4 +1,9 @@
+import { useEffect, useState } from 'react'
 import PcDropdown from "./PcDropdown";
+
+function PlayerCharacter() {
+  const [pcList, setPcList] = useState([])
+  const [newPcName, setNewPcName] = useState(null)
 
 function handleSubmit(event) {
   event.preventDefault();
@@ -12,18 +17,34 @@ function handleSubmit(event) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(formData),
-  }).then((r) => {
-    if (r.ok) {
-      r.json().then((data) => {
+  }).then((response) => {
+    if (response.ok) {
+      response.json().then((data) => {
         console.log(data);
+        event.target.reset()
+        setNewPcName(data.pc_name)
       });
     } else {
-      r.json().then((err) => console.log(err.errors));
+      response.json().then((err) => console.log(err.errors));
     }
   });
 }
 
-function PlayerCharacter() {
+  useEffect(() => {
+    if (newPcName) {
+      setPcList((prevPcList) => [...prevPcList, newPcName])
+      setNewPcName(null)
+    }
+  }, [newPcName])
+
+  useEffect(() => {
+    fetch('/playercharacter')
+    .then((response) => response.json())
+    .then((data) => {
+      setPcList(data.pcList)
+    })
+  }, [])
+
   return (
     <div className="bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:p-6">
@@ -54,7 +75,7 @@ function PlayerCharacter() {
             Save
           </button>
         </form>
-        <PcDropdown />
+        <PcDropdown pcList={pcList} />
       </div>
     </div>
   );
