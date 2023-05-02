@@ -16,6 +16,10 @@ function handleSubmit(event) {
     if (r.ok) {
       r.json().then((data) => {
         console.log(data);
+        const npcDropdown = document.getElementById('npc-dropdown')
+        const newOption = new Option(data.npc_name, data.npc_name)
+        npcDropdown.add(newOption)
+        event.target.reset()
       });
     } else {
       r.json().then((err) => console.log(err.errors));
