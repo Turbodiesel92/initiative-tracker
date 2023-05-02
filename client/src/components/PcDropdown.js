@@ -8,6 +8,7 @@ function classNames(...classes) {
 
 function PcDropdown() {
   const [pcs, setPcs] = useState([]);
+  const [pcList, setPcList] = useState([])
   const [error, setError] = useState(null);
   const [editingPc, setEditingPc] = useState(null);
 
