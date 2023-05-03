@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 
 function EditNpcModal({ npc, onUpdate, onClose }) {
-  const [npcs, setNpcs] = useState([]);
-  const [npcList, setNpcList] = useState([]);
   const [error, setError] = useState(null);
   const [editingNpc, setEditingNpc] = useState(false);
   const [newName, setNewName] = useState("");
@@ -35,7 +33,7 @@ function EditNpcModal({ npc, onUpdate, onClose }) {
         if (response.ok) {
           onUpdate({ ID: editingNpc[0], npc_name: newName });
         } else {
-          throw new Error("Failed to update NPC");
+          throw new error("Failed to update NPC");
         }
       })
       .catch((error) => {

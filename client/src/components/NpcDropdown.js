@@ -11,7 +11,6 @@ function classNames(...classes) {
 
 function NpcDropdown({ onNpcAdded }) {
   const [npcs, setNpcs] = useState([]);
-  const [npcList, setNpcList] = useState([]);
   const [error, setError] = useState(null);
   const [editingNpc, setEditingNpc] = useState(false);
 
