@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
 
-function EditNpcModal({ npc, onUpdate }) {
-  const [npcs, setNpcs] = useState([]);
-  const [npcList, setNpcList] = useState([]);
+function EditNpcModal({ npc, onUpdate, onClose }) {
   const [error, setError] = useState(null);
   const [editingNpc, setEditingNpc] = useState(false);
   const [newName, setNewName] = useState("");
 
   useEffect(() => {
-    setEditingNpc(npc)
-    setNewName(npc.npc_name)
-  }, [npc])
+    setEditingNpc(npc);
+    setNewName(npc.npc_name);
+  }, [npc]);
 
   const handleNameChange = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     setNewName(event.target.value);
   };
 
@@ -24,7 +22,7 @@ function EditNpcModal({ npc, onUpdate }) {
       return;
     }
 
-    fetch(`/npc/${editingNpc.id}`, {
+    fetch(`/npc/${editingNpc[0]}`, {
       method: "PATCH",
       headers: {
         "content-Type": "application/json",
@@ -33,9 +31,9 @@ function EditNpcModal({ npc, onUpdate }) {
     })
       .then((response) => {
         if (response.ok) {
-          onUpdate({ ID: editingNpc.id, npc_name: newName})
+          onUpdate({ ID: editingNpc[0], npc_name: newName });
         } else {
-          throw new Error("Failed to update NPC");
+          throw new error("Failed to update NPC");
         }
       })
       .catch((error) => {
@@ -64,7 +62,7 @@ function EditNpcModal({ npc, onUpdate }) {
                   type="text"
                   id="npc-name"
                   name="npc-name"
-                  value={newName}
+                  defaultValue={newName}
                   onChange={handleNameChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 />
@@ -79,6 +77,22 @@ function EditNpcModal({ npc, onUpdate }) {
                 </button>
               </div>
             </form>
+            <button className="absolute top-0 right-0 m-4" onClick={onClose}>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-gray-600"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </div>
