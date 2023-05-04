@@ -1,49 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import NpcDropdown from "./NpcDropdown";
 
 function NonPlayerCharacter() {
-  const [npcList, setNpcList] = useState([])
-  const [newNpcName, setNewNpcName] = useState(null)
+  const [npcList, setNpcList] = useState([]);
+  const [newNpcName, setNewNpcName] = useState(null);
 
-function handleSubmit(event) {
-  event.preventDefault();
-  const formData = {
-    npc_name: event.target.npcName.value,
-  };
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = {
+      npc_name: event.target.npcName.value,
+    };
 
-  fetch("/npc", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).then((response) => {
-    if (response.ok) {
-      response.json().then((data) => {
-        console.log(data);
-        event.target.reset()
-        setNewNpcName(data.npc_name)
-      });
-    } else {
-      response.json().then((err) => console.log(err.errors));
-    }
-  });
-}
-
-useEffect(() => {
-  if (newNpcName) {
-    setNpcList((prevNpcList) => [...prevNpcList, newNpcName])
-    setNewNpcName(null)
-  }
-}, [newNpcName])
-
-useEffect(() => {
-  fetch('/npc')
-    .then((response) => response.json())
-    .then((data) => {
-      setNpcList(data.npcList);
+    fetch("/npc", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          event.target.reset();
+          setNewNpcName(data.npc_name);
+        });
+      } else {
+        response.json().then((err) => console.log(err.errors));
+      }
     });
-}, []);
+  }
+
+  useEffect(() => {
+    if (newNpcName) {
+      setNpcList((prevNpcList) => [...prevNpcList, newNpcName]);
+      setNewNpcName(null);
+    }
+  }, [newNpcName]);
+
+  useEffect(() => {
+    fetch("/npc")
+      .then((response) => response.json())
+      .then((data) => {
+        setNpcList(data.npcList);
+      });
+  }, []);
 
   return (
     <div className="bg-white shadow sm:rounded-lg">
