@@ -1,49 +1,49 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 import PcDropdown from "./PcDropdown";
 
 function PlayerCharacter() {
-  const [pcList, setPcList] = useState([])
-  const [newPcName, setNewPcName] = useState(null)
+  const [pcList, setPcList] = useState([]);
+  const [newPcName, setNewPcName] = useState(null);
 
-function handleSubmit(event) {
-  event.preventDefault();
-  const formData = {
-    pc_name: event.target.pcName.value,
-  };
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = {
+      pc_name: event.target.pcName.value,
+    };
 
-  fetch("/playercharacter", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  }).then((response) => {
-    if (response.ok) {
-      response.json().then((data) => {
-        console.log(data);
-        event.target.reset()
-        setNewPcName(data.pc_name)
-      });
-    } else {
-      response.json().then((err) => console.log(err.errors));
-    }
-  });
-}
+    fetch("/playercharacter", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    }).then((response) => {
+      if (response.ok) {
+        response.json().then((data) => {
+          console.log(data);
+          event.target.reset();
+          setNewPcName(data.pc_name);
+        });
+      } else {
+        response.json().then((err) => console.log(err.errors));
+      }
+    });
+  }
 
   useEffect(() => {
     if (newPcName) {
-      setPcList((prevPcList) => [...prevPcList, newPcName])
-      setNewPcName(null)
+      setPcList((prevPcList) => [...prevPcList, newPcName]);
+      setNewPcName(null);
     }
-  }, [newPcName])
+  }, [newPcName]);
 
   useEffect(() => {
-    fetch('/playercharacter')
-    .then((response) => response.json())
-    .then((data) => {
-      setPcList(data.pcList)
-    })
-  }, [])
+    fetch("/playercharacter")
+      .then((response) => response.json())
+      .then((data) => {
+        setPcList(data.pcList);
+      });
+  }, []);
 
   return (
     <div className="bg-white shadow sm:rounded-lg">

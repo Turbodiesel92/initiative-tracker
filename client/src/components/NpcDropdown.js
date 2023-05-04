@@ -1,13 +1,15 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon, TrashIcon, PencilAltIcon } from "@heroicons/react/solid";
+import {
+  ChevronDownIcon,
+  TrashIcon,
+  PencilAltIcon,
+} from "@heroicons/react/solid";
 import EditNpcModal from "./EditNpcModal";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
-
-
 
 function NpcDropdown({ onNpcAdded }) {
   const [npcs, setNpcs] = useState([]);
@@ -125,15 +127,14 @@ function NpcDropdown({ onNpcAdded }) {
                               onClick={() => handleEditClick(npc[0])}
                             >
                               {npc[1]}
-                              <PencilAltIcon className='h-5 w-5' />
+                              <PencilAltIcon className="h-5 w-5" />
                             </button>
                             <button
                               href="#"
                               className="text-gray-400 hover:text-gray-500 w-5 h-5"
                               onClick={() => handleDeleteClick(npc[0])}
                             >
-
-                              <TrashIcon className='h-5 w-5' />
+                              <TrashIcon className="h-5 w-5" />
                             </button>
                           </div>
                         )}
@@ -152,7 +153,7 @@ function NpcDropdown({ onNpcAdded }) {
           npc={editingNpc}
           onSubmit={handleEditSubmit}
           onClose={() => setEditingNpc(null)}
-          />
+        />
       )}
 
       {error && <p className="text-red-500">{error.message}</p>}

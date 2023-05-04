@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 
-function EditNpcModal({ npc, onUpdate, onClose }) {
+function EditPcModal({ pc, onUpdate, onClose }) {
   const [error, setError] = useState(null);
-  const [editingNpc, setEditingNpc] = useState(false);
+  const [editingPc, setEditingPc] = useState(false);
   const [newName, setNewName] = useState("");
 
   useEffect(() => {
-    setEditingNpc(npc);
-    setNewName(npc.npc_name);
-  }, [npc]);
+    setEditingPc(pc);
+    setNewName(pc.pc_name);
+  }, [pc]);
 
   const handleNameChange = (event) => {
     event.preventDefault();
@@ -21,18 +21,18 @@ function EditNpcModal({ npc, onUpdate, onClose }) {
       return;
     }
 
-    fetch(`/npc/${editingNpc[0]}`, {
+    fetch(`/playercharacter/${editingPc[0]}`, {
       method: "PATCH",
       headers: {
         "content-Type": "application/json",
       },
-      body: JSON.stringify({ npc_name: newName }),
+      body: JSON.stringify({ pc_name: newName }),
     })
       .then((response) => {
         if (response.ok) {
-          onUpdate({ ID: editingNpc[0], npc_name: newName });
+          onUpdate({ ID: editingPc[0], pc_name: newName });
         } else {
-          throw new error("Failed to update NPC");
+          throw new error("Failed to update PC");
         }
       })
       .catch((error) => {
@@ -53,14 +53,14 @@ function EditNpcModal({ npc, onUpdate, onClose }) {
               <div className="mb-4">
                 <label
                   className="block text-gray-700 font-bold mb-2"
-                  htmlFor="npc-name"
+                  htmlFor="pc-name"
                 >
-                  NPC Name
+                  PC Name
                 </label>
                 <input
                   type="text"
-                  id="npc-name"
-                  name="npc-name"
+                  id="pc-name"
+                  name="pc-name"
                   defaultValue={newName}
                   onChange={handleNameChange}
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -99,4 +99,4 @@ function EditNpcModal({ npc, onUpdate, onClose }) {
   );
 }
 
-export default EditNpcModal;
+export default EditPcModal;
