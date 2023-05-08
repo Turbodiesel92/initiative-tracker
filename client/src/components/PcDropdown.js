@@ -146,7 +146,7 @@ function PcDropdown() {
 
       {editingPc && (
         <EditPcModal
-          npc={editingPc}
+          pc={editingPc}
           onSubmit={handleEditSubmit}
           onClose={() => setEditingPc(null)}
         />
