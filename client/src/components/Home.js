@@ -1,5 +1,5 @@
 import { Box } from "../styles";
-// import Campaign from "./Campaign";
+import Campaign from "./Campaign";
 
 function home() {
   return (
@@ -26,7 +26,7 @@ function home() {
       <Box>
         <p>Thanks again!</p>
       </Box>
-      {/* <Campaign /> */}
+      <Campaign />
     </div>
   );
 }
