@@ -24,13 +24,13 @@ function EditNpcModal({ npc, onUpdate, onClose }) {
     fetch(`/npc/${editingNpc[0]}`, {
       method: "PATCH",
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ npc_name: newName }),
     })
       .then((response) => {
         if (response.ok) {
-          onUpdate({ ID: editingNpc[0], npc_name: newName });
+          onUpdate({ id: editingNpc[0], npc_name: newName });
         } else {
           throw new error("Failed to update NPC");
         }

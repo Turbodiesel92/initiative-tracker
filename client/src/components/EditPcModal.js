@@ -6,8 +6,8 @@ function EditPcModal({ pc, onUpdate, onClose }) {
   const [newName, setNewName] = useState("");
 
   useEffect(() => {
-    setEditingPc(pc);
-    setNewName(pc.pc_name);
+      setEditingPc(pc);
+      setNewName(pc.pc_name);
   }, [pc]);
 
   const handleNameChange = (event) => {
@@ -24,13 +24,13 @@ function EditPcModal({ pc, onUpdate, onClose }) {
     fetch(`/playercharacter/${editingPc[0]}`, {
       method: "PATCH",
       headers: {
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({ pc_name: newName }),
     })
       .then((response) => {
         if (response.ok) {
-          onUpdate({ ID: editingPc[0], pc_name: newName });
+          onUpdate({ id: editingPc[0], pc_name: newName });
         } else {
           throw new error("Failed to update PC");
         }
