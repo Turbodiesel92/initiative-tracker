@@ -256,7 +256,37 @@ class Campaigns(Resource):
             jsonify(campaign_dicts),
             200
         )
-api.add_resource(Campaigns, '/campaign', endpoint='campaign')
+
+    def patch(self, campaign_id):
+        try:
+            campaign_to_update = Campaign.query.get_or_404(campaign_id)
+            campaign_to_update.pc_name = request.get_json().get('campaign_name')
+
+            db.session.add(campaign_to_update)
+            db.session.commit()
+
+            return make_response(
+                {'message': 'Campaign updated successfully'},
+                200
+            )
+        except:
+            return make_response(
+                {'error': ['Failed to update campaign']},
+                400
+            )
+
+    def delete(self, campaign_id):
+        campaign_to_delete = Campaign.query.get_or_404(campaign_id)
+
+        db.session.delete(campaign_to_delete)
+        db.session.commit()
+
+        return make_response(
+            {'message': 'Campaign deleted Successfully'},
+            200
+        )
+
+api.add_resource(Campaigns, '/campaign', '/campaign/<int:campaign_id>', endpoint='campaign')
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
