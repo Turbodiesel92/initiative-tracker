@@ -1,6 +1,10 @@
 import { Fragment, useEffect, useState } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon, TrashIcon, PencilAltIcon } from "@heroicons/react/solid";
+import {
+  ChevronDownIcon,
+  TrashIcon,
+  PencilAltIcon,
+} from "@heroicons/react/solid";
 import EditPcModal from "./EditPcModal";
 
 function classNames(...classes) {
