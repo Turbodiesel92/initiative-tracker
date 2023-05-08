@@ -50,7 +50,7 @@ function NavBar() {
 
 const Wrapper = styled.header`
   display: flex;
-  color: #171FFF;
+  color: #171fff;
   font-size: 40px;
   justify-content: center;
   align-items: center;

@@ -7,7 +7,7 @@ function TurnTracker() {
   const [nonPlayerCharacters, setNonPlayerCharacters] = useState([]);
   const [isStarted, setIsStarted] = useState(false);
   const [activePlayerIndex, setActivePlayerIndex] = useState(0);
-  const [updatedCharacterName, setUpdatedCharacterName] = useState('')
+  const [updatedCharacterName, setUpdatedCharacterName] = useState("");
 
   // Function for starting and displaying the tracker
 
@@ -81,10 +81,7 @@ function TurnTracker() {
             </thead>
             <tbody>
               {playerCharacters.map((pc, index) => (
-
-                <tr
-                  key={`pc${pc.id}-${index}`}
-                >
+                <tr key={`pc${pc.id}-${index}`}>
                   <td>
                     <div className="flex items-center justify-between">
                       <span>{pc.pc_name}</span>
@@ -111,9 +108,7 @@ function TurnTracker() {
                 </tr>
               ))}
               {nonPlayerCharacters.map((npc, index) => (
-                <tr
-                  key={`npc${npc.id}-${index}`}
-                >
+                <tr key={`npc${npc.id}-${index}`}>
                   <td>
                     <div className="flex items-center justify-between">
                       <span>{npc.npc_name}</span>
@@ -163,43 +158,51 @@ function TurnTracker() {
             {/* <HighlightedRow className="active-row"> */}
             {[...playerCharacters, ...nonPlayerCharacters]
               .sort((a, b) => b.initiative - a.initiative)
-              .map((character, index) => (
-                console.log(index, activePlayerIndex, index === activePlayerIndex),
-                <tr
-                  key={character.id}
-                  className={index === activePlayerIndex ? "active-row" : ""}
+              .map(
+                (character, index) => (
+                  console.log(
+                    index,
+                    activePlayerIndex,
+                    index === activePlayerIndex
+                  ),
+                  (
+                    <tr
+                      key={character.id}
+                      className={
+                        index === activePlayerIndex ? "active-row" : ""
+                      }
+                    >
+                      <td>{character.pc_name || character.npc_name}</td>
+                      <td>{character.initiative}</td>
+                    </tr>
+                  )
+                )
+              )}
+
+            <tr>
+              <td>
+                <Button
+                  onClick={handleNext}
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
                 >
-                  <td>{character.pc_name || character.npc_name}</td>
-                  <td>{character.initiative}</td>
-                </tr>
-              ))}
+                  Next Character
+                </Button>
 
-          <tr>
-            <td>
-          <Button
-            onClick={handleNext}
-            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
-            >
-            Next Character
-          </Button>
+                {/* Button for when the encounter is over */}
 
-            {/* Button for when the encounter is over */}
+                <Button
+                  type="button"
+                  className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
+                  onClick={() => {
+                    setIsStarted(false);
+                  }}
+                >
+                  End Combat
+                </Button>
+              </td>
+            </tr>
 
-          <Button
-            type="button"
-            className="mt-3 inline-flex w-full items-center justify-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 sm:ml-3 sm:mt-0 sm:w-auto"
-            onClick={() => {
-              setIsStarted(false);
-            }}
-          >
-            End Combat
-          </Button>
-
-            </td>
-          </tr>
-
-          {/* </HighlightedRow> */}
-
+            {/* </HighlightedRow> */}
           </tbody>
         </table>
       )}

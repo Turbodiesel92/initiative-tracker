@@ -6,8 +6,8 @@ function EditPcModal({ pc, onUpdate, onClose }) {
   const [newName, setNewName] = useState("");
 
   useEffect(() => {
-      setEditingPc(pc);
-      setNewName(pc.pc_name);
+    setEditingPc(pc);
+    setNewName(pc.pc_name);
   }, [pc]);
 
   const handleNameChange = (event) => {
