@@ -1,28 +1,48 @@
 import { Fragment, useState, useEffect } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon, TrashIcon } from "@heroicons/react/solid";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 function CampaignDropdown() {
-  const [campaigns, setCampaigns] = useState([])
+  const [campaigns, setCampaigns] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch("/campaign")
       .then((response) => response.json())
       .then((data) => {
-        console.log('fetch:', data)
-        setCampaigns(data.map((campaign) => ({id : campaign.id, name: campaign.campaign_name})))
+        setCampaigns(
+          data.map((campaign) => ({
+            id: campaign.id,
+            name: campaign.campaign_name,
+          }))
+        );
       })
       .catch((error) => {
-        setError(error)
-      })
-    }, [])
+        setError(error);
+      });
+  }, []);
 
-    console.log('camps:', campaigns)
+  const handleDeleteClick = (campaignId) => {
+    fetch(`/campaign/${campaignId}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setCampaigns((prevCampaigns) =>
+            prevCampaigns.filter((campaign) => campaign.id !== campaignId)
+          );
+        } else {
+          throw new error("Failed to delete Campaign");
+        }
+      })
+      .catch((error) => {
+        setError(error);
+      });
+  };
 
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -50,15 +70,24 @@ function CampaignDropdown() {
             {campaigns.map((campaign) => (
               <Menu.Item key={campaign.id}>
                 {({ active }) => (
-                  <a
-                    href={campaign.url}
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
-                    )}
-                  >
-                    {campaign.name}
-                  </a>
+                  <div className="flex items-Center justify-between">
+                    <a
+                      href={campaign.url}
+                      className={classNames(
+                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                        "block px-4 py-2 text-sm"
+                      )}
+                    >
+                      {campaign.name}
+                    </a>
+                    <button
+                      href="#"
+                      className="text-gray-400 hover:text-gray-500 w-5 h-5"
+                      onClick={() => handleDeleteClick(campaign.id)}
+                    >
+                      <TrashIcon className="h-5 w-5" />
+                    </button>
+                  </div>
                 )}
               </Menu.Item>
             ))}
@@ -68,6 +97,5 @@ function CampaignDropdown() {
     </Menu>
   );
 }
-
 
 export default CampaignDropdown;
