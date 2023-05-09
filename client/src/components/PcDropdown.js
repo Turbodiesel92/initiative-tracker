@@ -74,7 +74,7 @@ function PcDropdown() {
         if (response.ok) {
           setPcs((prevPcs) => prevPcs.filter((pc) => pc[0] !== pcId));
         } else {
-          throw new Error("Failed to delete PC");
+          throw new error("Failed to delete PC");
         }
       })
       .catch((error) => {
