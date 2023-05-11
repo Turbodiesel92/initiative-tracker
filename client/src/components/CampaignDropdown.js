@@ -8,6 +8,9 @@ function classNames(...classes) {
 
 function CampaignDropdown() {
   const [campaigns, setCampaigns] = useState([]);
+  const [activeCampaign, setActiveCampaign] = useState(null);
+  const [pcs, setPcs] = useState([]);
+  const [npcs, setNpcs] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -24,7 +27,27 @@ function CampaignDropdown() {
       .catch((error) => {
         setError(error);
       });
+
+    fetch("/playercharacter")
+      .then((response) => response.json())
+      .then((data) => {
+        setPcs(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
+
+    fetch("/npc")
+      .then((response) => response.json())
+      .then((data) => {
+        setNpcs(data);
+      })
+      .catch((error) => {
+        setError(error);
+      });
   }, []);
+
+
 
   const handleDeleteClick = (campaignId) => {
     fetch(`/campaign/${campaignId}`, {
@@ -35,6 +58,9 @@ function CampaignDropdown() {
           setCampaigns((prevCampaigns) =>
             prevCampaigns.filter((campaign) => campaign.id !== campaignId)
           );
+          if (activeCampaign?.id === campaignId) {
+            setActiveCampaign(null);
+          }
         } else {
           throw new error("Failed to delete Campaign");
         }
@@ -42,6 +68,20 @@ function CampaignDropdown() {
       .catch((error) => {
         setError(error);
       });
+  };
+
+  const handleCampaignClick = (campaign) => {
+    setActiveCampaign(campaign);
+
+    const filteredPcs = pcs.filter(
+      (pc) => pc.campaign_id === campaign.id
+    );
+      setPcs(filteredPcs)
+
+    const filteredNpcs = npcs.filter(
+      (npc) => npc.campaign_id === campaign.id
+    );
+      setNpcs(filteredNpcs)
   };
 
   return (
@@ -77,6 +117,7 @@ function CampaignDropdown() {
                         active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                         "block px-4 py-2 text-sm"
                       )}
+                      onClick={() => handleCampaignClick(campaign)}
                     >
                       {campaign.name}
                     </a>
