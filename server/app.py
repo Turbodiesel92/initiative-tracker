@@ -132,6 +132,28 @@ class NonPlayerCharacters(Resource):
             200
         )
 
+    def post(self):
+
+        try:
+            new_npc = NonPlayerCharacter(
+                npc_name=request.get_json()['npc_name'],
+            )
+
+            db.session.add(new_npc)
+            db.session.commit()
+
+            nonplayercharacter_dicts = [nonplayercharacter.to_dict() for nonplayercharacter in NonPlayerCharacter.query.all()]
+
+            return make_response(
+                jsonify(nonplayercharacter_dicts),
+                201
+            )
+        except:
+            return make_response(
+                {'error': ["validation errors"] },
+                400
+            )
+
     def patch(self, npc_id):
         try:
             npc_to_update = NonPlayerCharacter.query.get_or_404(npc_id)
@@ -172,6 +194,7 @@ class PlayerCharacters(Resource):
             jsonify(playercharacter_dicts),
             200
         )
+
     def post(self):
 
         try:
@@ -255,6 +278,24 @@ class Campaigns(Resource):
         except:
             return make_response(
                 {'error': ["validation errors"] },
+                400
+            )
+
+    def patch(self, campaign_id):
+        try:
+            campaign_to_update = Campaign.query.get_or_404(campaign_id)
+            campaign_to_update.campaign_name = request.get_json().get('campaign_name')
+
+            db.session.add(campaign_to_update)
+            db.session.commit()
+
+            return make_response(
+                {'message': 'Campaign updated successfully'},
+                200
+            )
+        except:
+            return make_response(
+                {'error': ['Failed to update campaign']},
                 400
             )
 

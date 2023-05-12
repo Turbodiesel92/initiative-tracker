@@ -6,7 +6,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function CampaignDropdown() {
+function CampaignDropdown({ onChange }) {
   const [campaigns, setCampaigns] = useState([]);
   const [activeCampaign, setActiveCampaign] = useState(null);
   const [pcs, setPcs] = useState([]);
@@ -71,7 +71,13 @@ function CampaignDropdown() {
   };
 
   const handleCampaignClick = (campaign) => {
-    setActiveCampaign(campaign);
+    if (campaign.id === null) {
+      setError('Please select a campaign');
+      return;
+    }
+
+    // setActiveCampaign(campaign.id);
+    onChange(campaign.id)
 
     const filteredPcs = pcs.filter(
       (pc) => pc.campaign_id === campaign.id

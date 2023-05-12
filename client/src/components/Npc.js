@@ -1,15 +1,30 @@
 import { useEffect, useState } from "react";
 import NpcDropdown from "./NpcDropdown";
+import CampaignDropdown from "./CampaignDropdown";
 
-function NonPlayerCharacter() {
+function NonPlayerCharacter({ activeCampaign, setActiveCampaign }) {
   const [npcList, setNpcList] = useState([]);
   const [newNpcName, setNewNpcName] = useState(null);
+  // const [selectedCampaignId, setSelectedCampaignId] = useState(null)
+
+  function handleCampaignChange(campaignId) {
+  //   setActiveCampaign(campaignId)
+  }
+
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    // if (!activeCampaign) {
+    //   console.log('please select a campaign');
+    //   return;
+    // }
+
     const formData = {
       npc_name: event.target.npcName.value,
+      campaign_id: activeCampaign,
     };
+    console.log('Form data:', formData)
 
     fetch("/npc", {
       method: "POST",
@@ -18,11 +33,30 @@ function NonPlayerCharacter() {
       },
       body: JSON.stringify(formData),
     }).then((response) => {
+      console.log('POST response:', response)
       if (response.ok) {
         response.json().then((data) => {
           console.log(data);
           event.target.reset();
           setNewNpcName(data.npc_name);
+
+          fetch(`/campaign/${activeCampaign}`, {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ name: data.campaign_name }),
+          }).then((response) => {
+            console.log('PATCH response:', response)
+            if (response.ok) {
+              response.json().then((data) => {
+                console.log(data);
+              })
+            } else {
+              response.json().then((err) => console.log(err.errors))
+            }
+          })
+          .catch((error) => console.log(error))
         });
       } else {
         response.json().then((err) => console.log(err.errors));
@@ -38,12 +72,16 @@ function NonPlayerCharacter() {
   }, [newNpcName]);
 
   useEffect(() => {
-    fetch("/npc")
-      .then((response) => response.json())
-      .then((data) => {
-        setNpcList(data.npcList);
-      });
-  }, []);
+    if (activeCampaign) {
+      fetch(`/npc?campaign_id=${activeCampaign}`)
+       .then((response) => response.json())
+       .then((data) => {
+         setNpcList(data.npcList);
+        });
+      }
+    }, [activeCampaign]);
+
+
 
   return (
     <div className="bg-white shadow sm:rounded-lg">
@@ -54,6 +92,7 @@ function NonPlayerCharacter() {
         <div className="mt-2 max-w-xl text-sm text-gray-500">
           <p>Add, Edit, and Delete Non Player Character names here.</p>
         </div>
+        <CampaignDropdown activeCampaign={activeCampaign} onChange={handleCampaignChange} />
         <form onSubmit={handleSubmit} className="mt-5 sm:flex sm:items-center">
           <div className="w-full sm:max-w-xs">
             <label htmlFor="npc_name" className="sr-only">
