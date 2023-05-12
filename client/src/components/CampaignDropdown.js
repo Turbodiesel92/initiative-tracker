@@ -82,6 +82,7 @@ function CampaignDropdown() {
       (npc) => npc.campaign_id === campaign.id
     );
       setNpcs(filteredNpcs)
+      console.log('Campaign: ', campaign)
   };
 
   return (
