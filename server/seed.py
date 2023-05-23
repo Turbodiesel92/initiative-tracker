@@ -58,17 +58,19 @@ if __name__ == '__main__':
 
         print("Seeding campaigns...")
         campaigns = []
-        for playercharacter in player_characters:
-            nonplayercharacter = rc(non_player_characters)
-            campaigns.append(
-                Campaign(player_character=playercharacter, non_player_character=nonplayercharacter, campaign_name='Wanders Palace')
-            )
+        for player_character in player_characters:
+            non_player_character = rc(non_player_characters)
+            campaign = Campaign(campaign_name='Wanders Palace')
+            campaign.player_characters.append(player_character)
+            campaign.non_player_characters.append(non_player_character)
+            campaigns.append(campaign)
 
-        for playercharacter in player_characters:
-            nonplayercharacter = rc(non_player_characters)
-            campaigns.append(
-                Campaign(player_character=playercharacter, non_player_character=nonplayercharacter, campaign_name='Ice Bound Lair')
-            )
+        for player_character in player_characters:
+            non_player_character = rc(non_player_characters)
+            campaign = Campaign(campaign_name='Ice Bound Lair')
+            campaign.player_characters.append(player_character)
+            campaign.non_player_characters.append(non_player_character)
+            campaigns.append(campaign)
 
         db.session.add_all(campaigns)
         db.session.commit()
