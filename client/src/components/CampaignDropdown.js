@@ -6,9 +6,9 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-function CampaignDropdown({ onChange }) {
+function CampaignDropdown({ activeCampaign, setActiveCampaign }) {
   const [campaigns, setCampaigns] = useState([]);
-  const [activeCampaign, setActiveCampaign] = useState(null);
+
   const [pcs, setPcs] = useState([]);
   const [npcs, setNpcs] = useState([]);
   const [error, setError] = useState(null);
@@ -76,8 +76,8 @@ function CampaignDropdown({ onChange }) {
       return;
     }
 
-    // setActiveCampaign(campaign.id);
-    onChange(campaign.id)
+    setActiveCampaign(campaign.id);
+    // onChange(campaign.id)
 
     const filteredPcs = pcs.filter(
       (pc) => pc.campaign_id === campaign.id

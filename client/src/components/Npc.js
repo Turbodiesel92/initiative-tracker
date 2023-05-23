@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import NpcDropdown from "./NpcDropdown";
 import CampaignDropdown from "./CampaignDropdown";
 
-function NonPlayerCharacter({ activeCampaign, setActiveCampaign }) {
+function NonPlayerCharacter() {
   const [npcList, setNpcList] = useState([]);
   const [newNpcName, setNewNpcName] = useState(null);
+  const [activeCampaign, setActiveCampaign] = useState(null);
   // const [selectedCampaignId, setSelectedCampaignId] = useState(null)
-
-  function handleCampaignChange(campaignId) {
+  // function handleCampaignChange(campaignId) {
   //   setActiveCampaign(campaignId)
-  }
+  // }
 
 
   function handleSubmit(event) {
@@ -92,7 +92,7 @@ function NonPlayerCharacter({ activeCampaign, setActiveCampaign }) {
         <div className="mt-2 max-w-xl text-sm text-gray-500">
           <p>Add, Edit, and Delete Non Player Character names here.</p>
         </div>
-        <CampaignDropdown activeCampaign={activeCampaign} onChange={handleCampaignChange} />
+        <CampaignDropdown activeCampaign={activeCampaign} setActiveCampaign={setActiveCampaign} />
         <form onSubmit={handleSubmit} className="mt-5 sm:flex sm:items-center">
           <div className="w-full sm:max-w-xs">
             <label htmlFor="npc_name" className="sr-only">
