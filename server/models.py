@@ -15,7 +15,7 @@ class User(db.Model, SerializerMixin):
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaigns.id'))
 
 
-    # campaigns = db.relationship('Campaign', backref='user')
+    campaigns = db.relationship('Campaign', backref='user')
 
     @hybrid_property
     def password_hash(self):
@@ -85,16 +85,3 @@ class CampaignNpc(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     campaign_id = db.Column(db.Integer, db.ForeignKey('campaigns.id'))
     npc_id = db.Column(db.Integer, db.ForeignKey('non_player_characters.id'))
-
-
-
-
-
-
-
-
-
-
-
-
-
