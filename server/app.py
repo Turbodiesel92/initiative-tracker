@@ -281,23 +281,7 @@ class Campaigns(Resource):
                 400
             )
 
-    def patch(self, campaign_id):
-        try:
-            campaign_to_update = Campaign.query.get_or_404(campaign_id)
-            campaign_to_update.campaign_name = request.get_json().get('campaign_name')
 
-            db.session.add(campaign_to_update)
-            db.session.commit()
-
-            return make_response(
-                {'message': 'Campaign updated successfully'},
-                200
-            )
-        except:
-            return make_response(
-                {'error': ['Failed to update campaign']},
-                400
-            )
 
     def delete(self, campaign_id):
         campaign_to_delete = Campaign.query.get_or_404(campaign_id)
